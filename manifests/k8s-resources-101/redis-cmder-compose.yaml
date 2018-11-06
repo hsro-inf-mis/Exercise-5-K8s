@@ -1,0 +1,17 @@
+version: '3.4'
+services:
+  redis:
+    image: redis:4.0.11-alpine
+    networks:
+      - redis-net
+  redis-cmder:
+    image: rediscommander/redis-commander:latest
+    environment:
+      REDIS_PORT: "6379"
+      REDIS_HOST: redis
+    ports:
+      - 8081:8081
+    networks:
+      - redis-net
+networks:
+  redis-net: {}
