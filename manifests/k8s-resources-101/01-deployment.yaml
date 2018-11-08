@@ -1,15 +1,49 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ...
+  name: redis-<shortname>
+  labels:
+    app: redis
+    student: <shortname>
 spec:
   selector:
     matchLabels:
-      ...
+      app: redis
+      tier: backend
+  replicas: 1
   template:
     metadata:
       labels:
-        ...
+        app: redis
+        tier: backend
+        student: <shortname>
     spec:
       containers:
-      ...
+      - name: redis
+        image: redis:alpine
+        imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            cpu: 100m
+            memory: 100Mi
+            student: <shortname>
+        ports:
+        - name: redis
+          containerPort: 6379
+          protocol: TCP
+      - name: redis-cmder
+        image: rediscommander/redis-commander:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+          - name: redis-cmder
+            containerPort: 8081
+            protocol: TCP
+        resources:
+          limits:
+            cpu: 100m
+            memory: 100Mi
+        env:
+          - name: REDIS_PORT
+            value: "6379"
+          - name: REDIS_HOST
+            value: "localhost"
