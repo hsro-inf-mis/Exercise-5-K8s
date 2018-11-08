@@ -1,9 +1,17 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: ...
+  name: redis-<shortname>
 spec:
   selector:
-    ...
+    app: redis
+    tier: backend
+    student: <shortname>
+  type: LoadBalancer # if Minikube LoadBalancer otherwise ClusterIP
   ports:
-  ...
+  - name: redis-cmder
+    protocol: TCP
+    port: 8081
+  - name: redis
+    protocol: TCP
+    port: 6379
