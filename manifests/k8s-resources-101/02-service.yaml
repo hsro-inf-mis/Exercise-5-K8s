@@ -7,7 +7,7 @@ spec:
     app: redis
     tier: backend
     student: <shortname>
-  type: LoadBalancer # if Minikube LoadBalancer otherwise ClusterIP
+  type: ClusterIP # if Minikube LoadBalancer otherwise ClusterIP
   ports:
   - name: redis-cmder
     protocol: TCP
